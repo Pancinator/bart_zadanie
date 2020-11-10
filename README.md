@@ -1,5 +1,5 @@
 ## Vypracované zadanie na back-end
-##### Pár poznámok k riešeniu
+##### Pár poznámok k riešeniu:
   1. K vypracovaniu som použil Django a Django REST Framework.
   2. Vrámci vypracovania boli vytvorené dva modely (tabuľky) a to Image a Gallery, relačný vzťah medzi týmito tabuľkami je
      Many-To-Many.
