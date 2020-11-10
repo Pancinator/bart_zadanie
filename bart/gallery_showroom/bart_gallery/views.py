@@ -1,6 +1,6 @@
 import datetime
 
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,6 +8,7 @@ from .serializers import GalerySerializerGet, GalerySerializerPostRead, GaleryDe
     GalleryDetailSerializerPost
 from .models import Galery, Image
 from PIL import Image as I
+
 
 @api_view(['GET'])  # function based decorator -> allows only usage of GET method
 def api_overview(request):
@@ -18,6 +19,7 @@ def api_overview(request):
     return Response(api_urls)
 
 
+# get list of galleries or create new one
 @api_view(['GET', 'POST'])
 def galleries(request):
     # GET request
@@ -25,7 +27,6 @@ def galleries(request):
         g = Galery.objects.all()
         serializer = GalerySerializerGet(g, many=True)
         return Response(serializer.data)
-
     # POST request
     elif request.method == 'POST':
         serializer = GalerySerializerPostRead(data=request.data)
@@ -123,11 +124,8 @@ def delete_image_from_galery(request, gallery, image):
         return Response('Galéria/obrázok bola úspešne vymazaná', status=status.HTTP_200_OK)
 
 
-"""
-image is basically fullpath field from Image instance. However there are no / symbols allowed while specifing
-URL in browser so I have used _ symbols. After that _ symbols are replaced with / symbol to match the path.
-"""
-def calcualte_dimensions(w, h, i):
+# Method for calculating a size ratio from origin image
+def calculate_dimensions(w, h, i):
     if w == 0:
         s = i.size
         ratio = s[0] / s[1]
@@ -139,6 +137,9 @@ def calcualte_dimensions(w, h, i):
         h = round(w * ratio)
         return w, h
 
+
+# Method for generating image with specific size
+# Method returns HttpResponse of imgae/jpeg type and object itself.
 @api_view(['GET'])
 def generate_image_view(request, w, h, image):
     # GET request
@@ -150,7 +151,8 @@ def generate_image_view(request, w, h, image):
             return Response('Obrázok sa nenašiel', status=status.HTTP_404_NOT_FOUND)
 
         if w == 0 or h == 0:
-            w, h = calcualte_dimensions(w, h, i)
+            w, h = calculate_dimensions(w, h, i)
+
         i.thumbnail((w,h))
         return HttpResponse(i, content_type="image/jpeg", status=status.HTTP_200_OK)
 

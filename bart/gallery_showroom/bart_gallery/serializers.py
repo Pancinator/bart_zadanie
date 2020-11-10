@@ -3,9 +3,11 @@ from .models import Galery, Image
 
 class ImagesSerializer(serializers.ModelSerializer):
     fullpath = serializers.CharField(source='image.url')
+
     class Meta:
         model = Image
         fields = ['path', 'fullpath', 'name', 'modified']
+
 
 class GalerySerializerGet(serializers.ModelSerializer):
 
@@ -15,7 +17,7 @@ class GalerySerializerGet(serializers.ModelSerializer):
 
 
 class GalerySerializerPostRead(serializers.ModelSerializer):
-    #Check if instatnce already exists
+    # Check if instatnce already exists
     def create(self, validated_data):
         if Galery.objects.filter(**validated_data).exists():
             return status.HTTP_409_CONFLICT
