@@ -2,7 +2,7 @@
 ##### Pár poznámok k riešeniu:
   1. K vypracovaniu som použil Django a Django REST Framework.
   2. Vrámci vypracovania boli vytvorené dva modely (tabuľky) a to Image a Gallery, relačný vzťah medzi týmito tabuľkami je
-     Many-To-Many (je možné využiť aj ForeignKey).
+     Many-To-Many (je možné využiť aj ForeignKey, prvotne som vsak myslel že ManyToMany bude výhodnejšie).
   3. Model Gallery reprezentuje galériu, kde sú uložené referencie na jednotlivé obrázky, slúži ako zoznam obrázkov. Image model          predstavuje jednotlivé obrázky, slúži na udržiavanie referencií na obrázky uložené v priečinku ***media***.
   3. K simulovaniu metód POST a DELETE som využil program ***Postman*** a jeho desktopového agenta.   
   4. Náhľadový obrázok je prispôsobený do výslednej veľkosti pomocou metódy ***thumbnail*** a odoslaný vo forme Httpresponse typu          image/jpeg.
