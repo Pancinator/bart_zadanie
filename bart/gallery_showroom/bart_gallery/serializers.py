@@ -1,6 +1,7 @@
 from rest_framework import serializers, status
 from .models import Galery, Image
 
+
 class ImagesSerializer(serializers.ModelSerializer):
     fullpath = serializers.CharField(source='image.url')
 

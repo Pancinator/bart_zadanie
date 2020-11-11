@@ -15,6 +15,7 @@ def api_overview(request):
     api_urls = {
         'List of galleries': 'api/gallery/',
         'List of images gallery': 'api/gallery/<name>',
+        'View the picture': 'api/images/<gallery>/<path>'
     }
     return Response(api_urls)
 
