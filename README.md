@@ -12,7 +12,7 @@
 ##### Pokus o zvládnutie bonusovej úlohy:
   1. Pokusil som o získane access tokenu tak ako bolo popísané vo facebook doku, avšak narazil som na chybovú hlášku o nevalídnosti        client_secret, aj keď som response_type nastavil na token tak ako to bolo popísané v zadaní. Implementáciu som preto nedokončil.
   2. Použitý request: https://graph.facebook.com/v8.0/oauth/access_token?client_id=1053174974861205&redirect_uri=https%3A%2F%2Flocalhost%2Ftoken&response_type=token
-  3. Skúsil som aj login request (dočítal som sa že je nutný aj login niekedy): https://www.facebook.com/dialog/oauth?client_id=1053174974861205&redirect_uri=https%3A%2F%2Flocalhost%2Ftoken&response_type=code. Ale aplikácia nepodporuje logovanie. 
+  3. Skúsil som aj login request (dočítal som sa že je nutný aj login na získanie Code parametru): https://www.facebook.com/dialog/oauth?client_id=1053174974861205&redirect_uri=https%3A%2F%2Flocalhost%2Ftoken&response_type=code. Ale aplikácia nepodporuje logovanie. 
 
 ##### Štruktúra repozitára:
   - bart
