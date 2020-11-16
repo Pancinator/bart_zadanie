@@ -8,7 +8,7 @@
   6. Nie je povolených viacero obrázkov s rovnakým menom v jednej galérií
   
     
-##### Návod na inštaláciu a spustenie django servera:
+#### Návod na inštaláciu a spustenie django servera:
 Navod bol vytváraný pre platformu Windows:
 
   1. clone git repo do ľubovoľného priečinka
