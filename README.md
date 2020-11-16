@@ -9,7 +9,7 @@
   
     
 #### Návod na inštaláciu a spustenie django servera:
-Navod bol vytváraný pre platformu Windows:
+Navod bol vytváraný pre platformu Windows (Python version 3.8):
 
   1. clone git repo do ľubovoľného priečinka
   2. Vytvorte nový virtual environment a to nasledovne: "yourfolder"\bart_zadanie\bart>python -m venv .\venv
