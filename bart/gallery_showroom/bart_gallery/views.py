@@ -27,14 +27,12 @@ def galleries(request):
     if request.method == 'GET':
         response_data = {}
         galleries = []
-
         for g in fs.listdir('')[0]:
             gallery = {
                 "path": g,
                 "name": g.replace("%", " ")
             }
             galleries.append(gallery)
-
         response_data['galleries'] = galleries
         return Response(response_data, status=status.HTTP_200_OK)
 
@@ -47,7 +45,6 @@ def galleries(request):
         except Exception as e:
             return Response('Chybne zadaný request - nevhodný obsah podľa schémy. ' + str(e),
                             status=status.HTTP_400_BAD_REQUEST)
-
         p = gallery_name.replace(" ", "%")
         if fs.exists(gallery_name):
             return Response('Galéria so zadaným názvom už existuje.', status=status.HTTP_409_CONFLICT)
@@ -83,7 +80,6 @@ def gallery_detail(request, gallery):
                         "modified": str(datetime.datetime.now()),
                     }
                     images.append(image)
-
                 response_data['gallery'] = g
                 response_data['images'] = images
                 return Response(response_data, status=status.HTTP_200_OK)
@@ -99,7 +95,6 @@ def gallery_detail(request, gallery):
         except Exception as e:
             return Response('Chybný request - nenašiel sa súbor pre upload. ' + str(e),
                             status=status.HTTP_400_BAD_REQUEST)
-
         if fs.exists(gallery):
             filename = fs.save(gallery + '/' + myfile.name, myfile)
             response = {
