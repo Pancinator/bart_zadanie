@@ -16,10 +16,10 @@ Navod bol vytváraný pre platformu Windows:
   3. aktivujte virtuálny environment: venv\Scripts\activate
   3. nainštalujte potrebné balíčky: python -m pip install -r requirements.txt 
   4. change directory: cd gallery_showroom
-  5. spustite server: python manage.py runserver
-  6. vykonajte migrácie: python manage.py makemigrations
-  7. migrujte: python manage.py migrate
-  6. API overview je dostupné v prehliadači na adrese http://127.0.0.1:8000/api/
+  5. vykonajte migrácie: python manage.py makemigrations
+  6. migrujte: python manage.py migrate
+  7. spustite server: python manage.py runserver
+  8. API overview je dostupné v prehliadači na adrese http://127.0.0.1:8000/api/
   
   
 ##### Pokus o zvládnutie bonusovej úlohy:
