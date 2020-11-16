@@ -12,8 +12,8 @@ from PIL import Image as I
 def api_overview(request):
     api_urls = {
         'List of galleries': 'api/gallery/',
-        'List of images gallery': 'api/gallery/<name>',
-        'View the picture': 'api/images/<gallery>/<path>'
+        'List of images in the gallery': 'api/gallery/<name>',
+        'View the picture': 'api/images/<w>x<h>/<path>'
     }
     return Response(api_urls)
 
