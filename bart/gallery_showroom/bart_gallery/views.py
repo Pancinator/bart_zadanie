@@ -96,16 +96,19 @@ def gallery_detail(request, gallery):
             return Response('Chybný request - nenašiel sa súbor pre upload. ' + str(e),
                             status=status.HTTP_400_BAD_REQUEST)
         if fs.exists(gallery):
-            filename = fs.save(gallery + '/' + myfile.name, myfile)
-            response = {
-                "uploaded": [{
-                    "path": myfile.name,
-                    "fullpath": fs.url(filename),
-                    "name": myfile.name.split('.')[0],
-                    "modified": str(datetime.datetime.now()),
-                }]
-            }
-            return Response(response, status=status.HTTP_200_OK)
+            if not fs.exists(gallery + '/' + myfile.name):
+                filename = fs.save(gallery + '/' + myfile.name, myfile)
+                response = {
+                    "uploaded": [{
+                        "path": myfile.name,
+                        "fullpath": fs.url(filename),
+                        "name": myfile.name.split('.')[0],
+                        "modified": str(datetime.datetime.now()),
+                    }]
+                }
+                return Response(response, status=status.HTTP_200_OK)
+            else:
+                return Response('Obrázok s týmto menom sa v tejto galérií už nachádza', status=status.HTTP_409_CONFLICT)
         else:
             return Response('Galéria pre upload sa nenašla', status=status.HTTP_404_NOT_FOUND)
 
