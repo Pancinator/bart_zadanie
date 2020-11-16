@@ -1,12 +1,11 @@
 ## Vypracované zadanie na back-end
 ##### Pár poznámok k riešeniu:
-  1. Návod na inštaláciu a spustenie django servera je popísané v guide.txt súbore
-  2. K vypracovaniu som použil Django a Django REST Framework riešenie je prerobené tak aby fungovalo bez použitia databázy.
-  3. K ukladaniu do adresárovej štruktúry som použil FileSystemStorage modul.
-  4. K simulovaniu metód POST a DELETE som využil program ***Postman*** a jeho desktopového agenta.   
-  5. Náhľadový obrázok je prispôsobený do výslednej veľkosti pomocou metódy ***thumbnail*** a odoslaný vo forme Httpresponse typu          image/jpeg.
-  6. Uploadovaný obrázok je ukládaný podľa nasledujúcej schémy: media/<gallery_name>/<image_name>
-  7. Nie je povolených viacero obrázkov s rovnakým menom v jednej galérií
+  1. K vypracovaniu som použil Django a Django REST Framework riešenie je prerobené tak aby fungovalo bez použitia databázy.
+  2. K ukladaniu do adresárovej štruktúry som použil FileSystemStorage modul.
+  3. K simulovaniu metód POST a DELETE som využil program ***Postman*** a jeho desktopového agenta.   
+  4. Náhľadový obrázok je prispôsobený do výslednej veľkosti pomocou metódy ***thumbnail*** a odoslaný vo forme Httpresponse typu          image/jpeg.
+  5. Uploadovaný obrázok je ukládaný podľa nasledujúcej schémy: media/<gallery_name>/<image_name>
+  6. Nie je povolených viacero obrázkov s rovnakým menom v jednej galérií
   
     
 ##### Návod na inštaláciu a spustenie django servera:
