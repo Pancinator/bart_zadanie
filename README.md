@@ -1,5 +1,5 @@
 ## Vypracované zadanie na back-end
-##### Pár poznámok k riešeniu:
+#### Pár poznámok k riešeniu:
   1. K vypracovaniu som použil Django a Django REST Framework riešenie je prerobené tak aby fungovalo bez použitia databázy.
   2. K ukladaniu do adresárovej štruktúry som použil FileSystemStorage modul.
   3. K simulovaniu metód POST a DELETE som využil program ***Postman*** a jeho desktopového agenta.   
