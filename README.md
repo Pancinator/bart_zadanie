@@ -1,4 +1,10 @@
 ## Vypracované zadanie na back-end
+#### Zmeny uskutočnené po poslednej oprave:
+  1. Drvivá väčšina chybných testov bola bohužial spôsobená kvôli nešťastnemu resp. zlému enkódovaniu/dekódovaniu do/z ACII            formatu čo spôsobilo následne zlé ukladanie v adresárovom systéme, tento problem sa vyriešil robustnejším spôsobom a to            využívaním urllib knižnice.
+  2. Problém s nutnosťou prítomnosti "trailing slash" na konci URL requestov tak isto by mal byť vyriešený, automatizované testy        teda už nemusia byť upravené.
+  3. Bol pridaný jendoduchý serializér na kontorlu validnosti JSON requestu na vytvorenie galérie. 
+  4. Endpoint GET /images/{w}x{h}/{path} si už viac nevyžaduje celú cestu k obrázku. 
+
 #### Pár poznámok k riešeniu:
   1. K vypracovaniu som použil Django a Django REST Framework riešenie je prerobené tak aby fungovalo bez použitia databázy.
   2. K ukladaniu do adresárovej štruktúry som použil FileSystemStorage modul.
@@ -40,7 +46,7 @@ Oproti predchádzajúcemu riešeniu niesú využité súbory models.py a seriali
         - admin.py
         - apps.py
         - models.py
-        - ~~serializers.py~~
+        - serializers.py
         - tests.py
         - urls.py
         - views.py
