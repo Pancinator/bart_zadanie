@@ -1,11 +1,26 @@
 ## Vypracované zadanie na back-end
-##### Pár poznámok k riešeniu:
+#### Pár poznámok k riešeniu:
   1. K vypracovaniu som použil Django a Django REST Framework riešenie je prerobené tak aby fungovalo bez použitia databázy.
   2. K ukladaniu do adresárovej štruktúry som použil FileSystemStorage modul.
   3. K simulovaniu metód POST a DELETE som využil program ***Postman*** a jeho desktopového agenta.   
   4. Náhľadový obrázok je prispôsobený do výslednej veľkosti pomocou metódy ***thumbnail*** a odoslaný vo forme Httpresponse typu          image/jpeg.
   5. Uploadovaný obrázok je ukládaný podľa nasledujúcej schémy: media/<gallery_name>/<image_name>
   6. Nie je povolených viacero obrázkov s rovnakým menom v jednej galérií
+  
+    
+#### Návod na inštaláciu a spustenie django servera:
+Navod bol vytváraný pre platformu Windows (Python version 3.8):
+
+  1. clone git repo do ľubovoľného priečinka
+  2. Vytvorte nový virtual environment a to nasledovne: "yourfolder"\bart_zadanie\bart>python -m venv .\venv
+  3. aktivujte virtuálny environment: venv\Scripts\activate
+  3. nainštalujte potrebné balíčky: python -m pip install -r requirements.txt 
+  4. change directory: cd gallery_showroom
+  5. vykonajte migrácie: python manage.py makemigrations
+  6. migrujte: python manage.py migrate
+  7. spustite server: python manage.py runserver
+  8. API overview je dostupné v prehliadači na adrese http://127.0.0.1:8000/api/
+  
   
 ##### Pokus o zvládnutie bonusovej úlohy:
   1. Pokusil som o získane access tokenu tak ako bolo popísané vo facebook doku, avšak narazil som na chybovú hlášku o nevalídnosti        client_secret, aj keď som response_type nastavil na token tak ako to bolo popísané v zadaní. Implementáciu som preto nedokončil.
