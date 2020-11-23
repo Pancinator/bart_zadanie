@@ -1,5 +1,7 @@
 import datetime
 import os
+import urllib
+
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, FileResponse
 from rest_framework.decorators import api_view
@@ -12,8 +14,8 @@ from PIL import Image as I
 def api_overview(request):
     api_urls = {
         'List of galleries': 'api/gallery/',
-        'List of images gallery': 'api/gallery/<name>',
-        'View the picture': 'api/images/<gallery>/<path>'
+        'List of images in gallery': 'api/gallery/<name>',
+        'View the picture': 'api/images/<w>x<h>/<path>'
     }
     return Response(api_urls)
 
@@ -30,7 +32,7 @@ def galleries(request):
         for g in fs.listdir('')[0]:
             gallery = {
                 "path": g,
-                "name": g.replace("%", " ")
+                "name": urllib.parse.unquote(g)
             }
             galleries.append(gallery)
         response_data['galleries'] = galleries
@@ -39,20 +41,20 @@ def galleries(request):
     # POST request
     elif request.method == 'POST':
         try:
-            gallery_name = request.data['name']
-            if '/' in gallery_name:
+            unquoted_gallery_name = request.data['name']
+            quoted_name = urllib.parse.quote(unquoted_gallery_name)
+            if '/' in unquoted_gallery_name:
                 return Response('Chybne zadaný request - nevhodný obsah podľa schémy.', status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response('Chybne zadaný request - nevhodný obsah podľa schémy. ' + str(e),
                             status=status.HTTP_400_BAD_REQUEST)
-        p = gallery_name.replace(" ", "%")
-        if fs.exists(gallery_name):
+        if fs.exists(quoted_name):
             return Response('Galéria so zadaným názvom už existuje.', status=status.HTTP_409_CONFLICT)
         else:
-            os.mkdir("media/" + p)
+            os.mkdir("media/" + quoted_name)
             content = {
-                "name": gallery_name,
-                "path": p
+                "name": unquoted_gallery_name,
+                "path": quoted_name
             }
             return Response(content, status=status.HTTP_201_CREATED)
 
@@ -61,21 +63,24 @@ def galleries(request):
 @api_view(['GET', 'POST', 'DELETE'])
 def gallery_detail(request, gallery):
     fs = FileSystemStorage()
+    unquoted_gallery_name = urllib.parse.unquote(gallery)
+    quoted_name = urllib.parse.quote(gallery)
+
     # GET request
     if request.method == 'GET':
         try:
-            if fs.exists(gallery):
+            if fs.exists(quoted_name):
                 response_data = {}
                 images = []
                 g = {
-                    "path": gallery,
-                    "name": gallery
+                    "path": quoted_name,
+                    "name": unquoted_gallery_name
                 }
                 # Loop through directory and create JSON response
-                for file in fs.listdir(gallery)[1]:
+                for file in fs.listdir(quoted_name)[1]:
                     image = {
                         "path": file,
-                        "fullpath": gallery + '/' + file,
+                        "fullpath": quoted_name + '/' + file,
                         "name": file.split('.')[0],
                         "modified": str(datetime.datetime.now()),
                     }
@@ -95,8 +100,8 @@ def gallery_detail(request, gallery):
         except Exception as e:
             return Response('Chybný request - nenašiel sa súbor pre upload. ' + str(e),
                             status=status.HTTP_400_BAD_REQUEST)
-        if fs.exists(gallery):
-            filename = fs.save(gallery + '/' + myfile.name, myfile)
+        if fs.exists(quoted_name):
+            filename = fs.save(quoted_name + '/' + myfile.name, myfile)
             response = {
                 "uploaded": [{
                     "path": myfile.name,
@@ -112,9 +117,8 @@ def gallery_detail(request, gallery):
     # DELETE request
     elif request.method == 'DELETE':
         try:
-            g = gallery.replace(" ", "%")
-            if fs.exists(g):
-                fs.delete(g)
+            if fs.exists(quoted_name):
+                fs.delete(quoted_name)
                 return Response('Galéria/obrázok bola úspešne vymazaná', status=status.HTTP_200_OK)
             else:
                 return Response('Zvolená galéria/obrázok neexistuje', status=status.HTTP_404_NOT_FOUND)
@@ -125,10 +129,13 @@ def gallery_detail(request, gallery):
 # Methods for handling DELETE request of the specific image in specific gallery
 @api_view(['DELETE'])
 def delete_image_from_galery(request, gallery, image):
+    unquoted_gallery_name = urllib.parse.quote(gallery)
+    quoted_name = urllib.parse.quote(gallery)
+
     if request.method == 'DELETE':
         try:
             fs = FileSystemStorage()
-            if fs.exists(gallery + '/' + image):
+            if fs.exists(quoted_name + '/' + image):
                 fs.delete(gallery + '/' + image)
                 return Response('Galéria/obrázok bola úspešne vymazaná', status=status.HTTP_200_OK)
             else:
@@ -158,7 +165,7 @@ def generate_image_view(request, w, h, image):
     # GET request
     if request.method == 'GET':
         try:
-            i = I.open(image)
+            i = I.open('media/' + image)
         except Exception as e:
             return Response('Obrázok sa nenašiel ' + str(e), status=status.HTTP_404_NOT_FOUND)
         try:
