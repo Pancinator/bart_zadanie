@@ -200,8 +200,11 @@ def generate_image_view(request, w, h, image):
             if w == 0 or h == 0:
                 w, h = calculate_dimensions(w, h, i)
             i.thumbnail((w,h))
-
-            return HttpResponse(i, content_type="image/jpeg", status=status.HTTP_200_OK)
+            response = HttpResponse(content_type="image/png", status=status.HTTP_200_OK)
+            i.save(response, "PNG")
+            # File will be downloaded not rendered by browser
+            response['Content-Disposition'] = 'attachment; filename="piece.jpg"'
+            return response
         except Exception as e:
             return Response('Nepodarilo sa spracovať obrázok a vygenerovať náhľad. ' + str(e),
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
